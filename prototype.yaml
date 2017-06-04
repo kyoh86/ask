@@ -1,0 +1,22 @@
+- name: Hidden
+  type: bool
+- name: Default
+  type: string
+- name: Env
+  type: string
+- name: Validation
+  type: "func(string) error"
+- name: Matcher
+  type: "*regexp.Regexp"
+- name: Enum
+  type: "[]string"
+- name: Column
+  type: int
+- name: Optional
+  type: bool
+- name: Limit
+  type: int
+- name: Reader
+  type: io.Reader
+- name: Writer
+  type: io.Writer
