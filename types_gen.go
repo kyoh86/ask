@@ -5,431 +5,459 @@ package ask
 import "strconv"
 
 // String takes string value from user input
-func (h Handler) String(msg string) (*string, error) {
+func (h Handler) String() (*string, error) {
 	var v string
-	if err := h.StringVar(msg, &v); err != nil {
+	if err := h.StringVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // String takes string value from user input
-func String(msg string) (*string, error) {
-	return static.String(msg)
+func String() (*string, error) {
+	return static.String()
 }
 
-// String takes string value from user input into v
-func (h Handler) StringVar(msg string, v *string) error {
-	return h.Ask(msg, func(input string) error {
-		*v = input
-		return nil
+// String sets a string variable, "v" to accept user input
+func (h Handler) StringVar(v *string) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			*v = input
+			return nil
+		})
 	})
 }
 
-// String takes string value from user input into v
-func StringVar(msg string, v *string) error {
-	return StringVar(msg, v)
+// String sets a string variable, "v" to accept user input
+func StringVar(v *string) Doer {
+	return StringVar(v)
 }
 
 // Bool takes bool value from user input
-func (h Handler) Bool(msg string) (*bool, error) {
+func (h Handler) Bool() (*bool, error) {
 	var v bool
-	if err := h.BoolVar(msg, &v); err != nil {
+	if err := h.BoolVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Bool takes bool value from user input
-func Bool(msg string) (*bool, error) {
-	return static.Bool(msg)
+func Bool() (*bool, error) {
+	return static.Bool()
 }
 
-// Bool takes bool value from user input into v
-func (h Handler) BoolVar(msg string, v *bool) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseBool(input)
-		if err != nil {
-			return err
-		}
-		*v = bool(p)
-		return nil
+// Bool sets a bool variable, "v" to accept user input
+func (h Handler) BoolVar(v *bool) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseBool(input)
+			if err != nil {
+				return err
+			}
+			*v = bool(p)
+			return nil
+		})
 	})
 }
 
-// Bool takes bool value from user input into v
-func BoolVar(msg string, v *bool) error {
-	return BoolVar(msg, v)
+// Bool sets a bool variable, "v" to accept user input
+func BoolVar(v *bool) Doer {
+	return BoolVar(v)
 }
 
 // Uint takes uint value from user input
-func (h Handler) Uint(msg string) (*uint, error) {
+func (h Handler) Uint() (*uint, error) {
 	var v uint
-	if err := h.UintVar(msg, &v); err != nil {
+	if err := h.UintVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Uint takes uint value from user input
-func Uint(msg string) (*uint, error) {
-	return static.Uint(msg)
+func Uint() (*uint, error) {
+	return static.Uint()
 }
 
-// Uint takes uint value from user input into v
-func (h Handler) UintVar(msg string, v *uint) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseUint(input, 10, strconv.IntSize)
-		if err != nil {
-			return err
-		}
-		*v = uint(p)
-		return nil
+// Uint sets a uint variable, "v" to accept user input
+func (h Handler) UintVar(v *uint) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseUint(input, 10, strconv.IntSize)
+			if err != nil {
+				return err
+			}
+			*v = uint(p)
+			return nil
+		})
 	})
 }
 
-// Uint takes uint value from user input into v
-func UintVar(msg string, v *uint) error {
-	return UintVar(msg, v)
+// Uint sets a uint variable, "v" to accept user input
+func UintVar(v *uint) Doer {
+	return UintVar(v)
 }
 
 // Uint8 takes uint8 value from user input
-func (h Handler) Uint8(msg string) (*uint8, error) {
+func (h Handler) Uint8() (*uint8, error) {
 	var v uint8
-	if err := h.Uint8Var(msg, &v); err != nil {
+	if err := h.Uint8Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Uint8 takes uint8 value from user input
-func Uint8(msg string) (*uint8, error) {
-	return static.Uint8(msg)
+func Uint8() (*uint8, error) {
+	return static.Uint8()
 }
 
-// Uint8 takes uint8 value from user input into v
-func (h Handler) Uint8Var(msg string, v *uint8) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseUint(input, 10, 8)
-		if err != nil {
-			return err
-		}
-		*v = uint8(p)
-		return nil
+// Uint8 sets a uint8 variable, "v" to accept user input
+func (h Handler) Uint8Var(v *uint8) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseUint(input, 10, 8)
+			if err != nil {
+				return err
+			}
+			*v = uint8(p)
+			return nil
+		})
 	})
 }
 
-// Uint8 takes uint8 value from user input into v
-func Uint8Var(msg string, v *uint8) error {
-	return Uint8Var(msg, v)
+// Uint8 sets a uint8 variable, "v" to accept user input
+func Uint8Var(v *uint8) Doer {
+	return Uint8Var(v)
 }
 
 // Uint16 takes uint16 value from user input
-func (h Handler) Uint16(msg string) (*uint16, error) {
+func (h Handler) Uint16() (*uint16, error) {
 	var v uint16
-	if err := h.Uint16Var(msg, &v); err != nil {
+	if err := h.Uint16Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Uint16 takes uint16 value from user input
-func Uint16(msg string) (*uint16, error) {
-	return static.Uint16(msg)
+func Uint16() (*uint16, error) {
+	return static.Uint16()
 }
 
-// Uint16 takes uint16 value from user input into v
-func (h Handler) Uint16Var(msg string, v *uint16) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseUint(input, 10, 16)
-		if err != nil {
-			return err
-		}
-		*v = uint16(p)
-		return nil
+// Uint16 sets a uint16 variable, "v" to accept user input
+func (h Handler) Uint16Var(v *uint16) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseUint(input, 10, 16)
+			if err != nil {
+				return err
+			}
+			*v = uint16(p)
+			return nil
+		})
 	})
 }
 
-// Uint16 takes uint16 value from user input into v
-func Uint16Var(msg string, v *uint16) error {
-	return Uint16Var(msg, v)
+// Uint16 sets a uint16 variable, "v" to accept user input
+func Uint16Var(v *uint16) Doer {
+	return Uint16Var(v)
 }
 
 // Uint32 takes uint32 value from user input
-func (h Handler) Uint32(msg string) (*uint32, error) {
+func (h Handler) Uint32() (*uint32, error) {
 	var v uint32
-	if err := h.Uint32Var(msg, &v); err != nil {
+	if err := h.Uint32Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Uint32 takes uint32 value from user input
-func Uint32(msg string) (*uint32, error) {
-	return static.Uint32(msg)
+func Uint32() (*uint32, error) {
+	return static.Uint32()
 }
 
-// Uint32 takes uint32 value from user input into v
-func (h Handler) Uint32Var(msg string, v *uint32) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseUint(input, 10, 32)
-		if err != nil {
-			return err
-		}
-		*v = uint32(p)
-		return nil
+// Uint32 sets a uint32 variable, "v" to accept user input
+func (h Handler) Uint32Var(v *uint32) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseUint(input, 10, 32)
+			if err != nil {
+				return err
+			}
+			*v = uint32(p)
+			return nil
+		})
 	})
 }
 
-// Uint32 takes uint32 value from user input into v
-func Uint32Var(msg string, v *uint32) error {
-	return Uint32Var(msg, v)
+// Uint32 sets a uint32 variable, "v" to accept user input
+func Uint32Var(v *uint32) Doer {
+	return Uint32Var(v)
 }
 
 // Uint64 takes uint64 value from user input
-func (h Handler) Uint64(msg string) (*uint64, error) {
+func (h Handler) Uint64() (*uint64, error) {
 	var v uint64
-	if err := h.Uint64Var(msg, &v); err != nil {
+	if err := h.Uint64Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Uint64 takes uint64 value from user input
-func Uint64(msg string) (*uint64, error) {
-	return static.Uint64(msg)
+func Uint64() (*uint64, error) {
+	return static.Uint64()
 }
 
-// Uint64 takes uint64 value from user input into v
-func (h Handler) Uint64Var(msg string, v *uint64) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseUint(input, 10, 64)
-		if err != nil {
-			return err
-		}
-		*v = uint64(p)
-		return nil
+// Uint64 sets a uint64 variable, "v" to accept user input
+func (h Handler) Uint64Var(v *uint64) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseUint(input, 10, 64)
+			if err != nil {
+				return err
+			}
+			*v = uint64(p)
+			return nil
+		})
 	})
 }
 
-// Uint64 takes uint64 value from user input into v
-func Uint64Var(msg string, v *uint64) error {
-	return Uint64Var(msg, v)
+// Uint64 sets a uint64 variable, "v" to accept user input
+func Uint64Var(v *uint64) Doer {
+	return Uint64Var(v)
 }
 
 // Int takes int value from user input
-func (h Handler) Int(msg string) (*int, error) {
+func (h Handler) Int() (*int, error) {
 	var v int
-	if err := h.IntVar(msg, &v); err != nil {
+	if err := h.IntVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Int takes int value from user input
-func Int(msg string) (*int, error) {
-	return static.Int(msg)
+func Int() (*int, error) {
+	return static.Int()
 }
 
-// Int takes int value from user input into v
-func (h Handler) IntVar(msg string, v *int) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseInt(input, 10, strconv.IntSize)
-		if err != nil {
-			return err
-		}
-		*v = int(p)
-		return nil
+// Int sets a int variable, "v" to accept user input
+func (h Handler) IntVar(v *int) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseInt(input, 10, strconv.IntSize)
+			if err != nil {
+				return err
+			}
+			*v = int(p)
+			return nil
+		})
 	})
 }
 
-// Int takes int value from user input into v
-func IntVar(msg string, v *int) error {
-	return IntVar(msg, v)
+// Int sets a int variable, "v" to accept user input
+func IntVar(v *int) Doer {
+	return IntVar(v)
 }
 
 // Int8 takes int8 value from user input
-func (h Handler) Int8(msg string) (*int8, error) {
+func (h Handler) Int8() (*int8, error) {
 	var v int8
-	if err := h.Int8Var(msg, &v); err != nil {
+	if err := h.Int8Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Int8 takes int8 value from user input
-func Int8(msg string) (*int8, error) {
-	return static.Int8(msg)
+func Int8() (*int8, error) {
+	return static.Int8()
 }
 
-// Int8 takes int8 value from user input into v
-func (h Handler) Int8Var(msg string, v *int8) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseInt(input, 10, 8)
-		if err != nil {
-			return err
-		}
-		*v = int8(p)
-		return nil
+// Int8 sets a int8 variable, "v" to accept user input
+func (h Handler) Int8Var(v *int8) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseInt(input, 10, 8)
+			if err != nil {
+				return err
+			}
+			*v = int8(p)
+			return nil
+		})
 	})
 }
 
-// Int8 takes int8 value from user input into v
-func Int8Var(msg string, v *int8) error {
-	return Int8Var(msg, v)
+// Int8 sets a int8 variable, "v" to accept user input
+func Int8Var(v *int8) Doer {
+	return Int8Var(v)
 }
 
 // Int16 takes int16 value from user input
-func (h Handler) Int16(msg string) (*int16, error) {
+func (h Handler) Int16() (*int16, error) {
 	var v int16
-	if err := h.Int16Var(msg, &v); err != nil {
+	if err := h.Int16Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Int16 takes int16 value from user input
-func Int16(msg string) (*int16, error) {
-	return static.Int16(msg)
+func Int16() (*int16, error) {
+	return static.Int16()
 }
 
-// Int16 takes int16 value from user input into v
-func (h Handler) Int16Var(msg string, v *int16) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseInt(input, 10, 16)
-		if err != nil {
-			return err
-		}
-		*v = int16(p)
-		return nil
+// Int16 sets a int16 variable, "v" to accept user input
+func (h Handler) Int16Var(v *int16) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseInt(input, 10, 16)
+			if err != nil {
+				return err
+			}
+			*v = int16(p)
+			return nil
+		})
 	})
 }
 
-// Int16 takes int16 value from user input into v
-func Int16Var(msg string, v *int16) error {
-	return Int16Var(msg, v)
+// Int16 sets a int16 variable, "v" to accept user input
+func Int16Var(v *int16) Doer {
+	return Int16Var(v)
 }
 
 // Int32 takes int32 value from user input
-func (h Handler) Int32(msg string) (*int32, error) {
+func (h Handler) Int32() (*int32, error) {
 	var v int32
-	if err := h.Int32Var(msg, &v); err != nil {
+	if err := h.Int32Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Int32 takes int32 value from user input
-func Int32(msg string) (*int32, error) {
-	return static.Int32(msg)
+func Int32() (*int32, error) {
+	return static.Int32()
 }
 
-// Int32 takes int32 value from user input into v
-func (h Handler) Int32Var(msg string, v *int32) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseInt(input, 10, 32)
-		if err != nil {
-			return err
-		}
-		*v = int32(p)
-		return nil
+// Int32 sets a int32 variable, "v" to accept user input
+func (h Handler) Int32Var(v *int32) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseInt(input, 10, 32)
+			if err != nil {
+				return err
+			}
+			*v = int32(p)
+			return nil
+		})
 	})
 }
 
-// Int32 takes int32 value from user input into v
-func Int32Var(msg string, v *int32) error {
-	return Int32Var(msg, v)
+// Int32 sets a int32 variable, "v" to accept user input
+func Int32Var(v *int32) Doer {
+	return Int32Var(v)
 }
 
 // Int64 takes int64 value from user input
-func (h Handler) Int64(msg string) (*int64, error) {
+func (h Handler) Int64() (*int64, error) {
 	var v int64
-	if err := h.Int64Var(msg, &v); err != nil {
+	if err := h.Int64Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Int64 takes int64 value from user input
-func Int64(msg string) (*int64, error) {
-	return static.Int64(msg)
+func Int64() (*int64, error) {
+	return static.Int64()
 }
 
-// Int64 takes int64 value from user input into v
-func (h Handler) Int64Var(msg string, v *int64) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseInt(input, 10, 64)
-		if err != nil {
-			return err
-		}
-		*v = int64(p)
-		return nil
+// Int64 sets a int64 variable, "v" to accept user input
+func (h Handler) Int64Var(v *int64) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseInt(input, 10, 64)
+			if err != nil {
+				return err
+			}
+			*v = int64(p)
+			return nil
+		})
 	})
 }
 
-// Int64 takes int64 value from user input into v
-func Int64Var(msg string, v *int64) error {
-	return Int64Var(msg, v)
+// Int64 sets a int64 variable, "v" to accept user input
+func Int64Var(v *int64) Doer {
+	return Int64Var(v)
 }
 
 // Float32 takes float32 value from user input
-func (h Handler) Float32(msg string) (*float32, error) {
+func (h Handler) Float32() (*float32, error) {
 	var v float32
-	if err := h.Float32Var(msg, &v); err != nil {
+	if err := h.Float32Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Float32 takes float32 value from user input
-func Float32(msg string) (*float32, error) {
-	return static.Float32(msg)
+func Float32() (*float32, error) {
+	return static.Float32()
 }
 
-// Float32 takes float32 value from user input into v
-func (h Handler) Float32Var(msg string, v *float32) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseFloat(input, 32)
-		if err != nil {
-			return err
-		}
-		*v = float32(p)
-		return nil
+// Float32 sets a float32 variable, "v" to accept user input
+func (h Handler) Float32Var(v *float32) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseFloat(input, 32)
+			if err != nil {
+				return err
+			}
+			*v = float32(p)
+			return nil
+		})
 	})
 }
 
-// Float32 takes float32 value from user input into v
-func Float32Var(msg string, v *float32) error {
-	return Float32Var(msg, v)
+// Float32 sets a float32 variable, "v" to accept user input
+func Float32Var(v *float32) Doer {
+	return Float32Var(v)
 }
 
 // Float64 takes float64 value from user input
-func (h Handler) Float64(msg string) (*float64, error) {
+func (h Handler) Float64() (*float64, error) {
 	var v float64
-	if err := h.Float64Var(msg, &v); err != nil {
+	if err := h.Float64Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // Float64 takes float64 value from user input
-func Float64(msg string) (*float64, error) {
-	return static.Float64(msg)
+func Float64() (*float64, error) {
+	return static.Float64()
 }
 
-// Float64 takes float64 value from user input into v
-func (h Handler) Float64Var(msg string, v *float64) error {
-	return h.Ask(msg, func(input string) error {
-		p, err := strconv.ParseFloat(input, 64)
-		if err != nil {
-			return err
-		}
-		*v = float64(p)
-		return nil
+// Float64 sets a float64 variable, "v" to accept user input
+func (h Handler) Float64Var(v *float64) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			p, err := strconv.ParseFloat(input, 64)
+			if err != nil {
+				return err
+			}
+			*v = float64(p)
+			return nil
+		})
 	})
 }
 
-// Float64 takes float64 value from user input into v
-func Float64Var(msg string, v *float64) error {
-	return Float64Var(msg, v)
+// Float64 sets a float64 variable, "v" to accept user input
+func Float64Var(v *float64) Doer {
+	return Float64Var(v)
 }

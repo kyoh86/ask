@@ -9,56 +9,56 @@ import (
 
 func main() {
 	{
-		out, err := ask.Hidden(true).String("hidden")
+		out, err := ask.Hidden(true).Message("hidden").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Default("foo").String("default")
+		out, err := ask.Default("foo").Message("default").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Env("ENVAR").String("envar")
+		out, err := ask.Env("ENVAR").Message("envar").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Validation(func(s string) error { return nil }).String("validation")
+		out, err := ask.Validation(func(s string) error { return nil }).Message("validation").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Matcher(regexp.MustCompile(".*")).String("matcher")
+		out, err := ask.Matcher(regexp.MustCompile(".*")).Message("matcher").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Enum([]string{"foo", "bar"}).String("enum")
+		out, err := ask.Enum([]string{"foo", "bar"}).Message("enum").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Column(42).String("column")
+		out, err := ask.Column(42).Message("column").String()
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Optional(true).String("optional")
+		out, err := ask.Optional(true).Message("optional").String()
 		if err != nil {
 			panic(err)
 		}
@@ -66,7 +66,7 @@ func main() {
 	}
 	// if the answer is invalid, it'll return error except for retrying just twice.
 	{
-		out, err := ask.Limit(2).String("limit(2)")
+		out, err := ask.Limit(2).Message("limit(2)").String()
 		if err != nil {
 			panic(err)
 		}

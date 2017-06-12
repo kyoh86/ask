@@ -20,3 +20,5 @@
   type: io.Reader
 - name: Writer
   type: io.Writer
+- name: Message
+  type: string

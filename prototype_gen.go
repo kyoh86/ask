@@ -20,6 +20,7 @@ type Prototype struct {
 	Limit      int
 	Reader     io.Reader
 	Writer     io.Writer
+	Message    string
 }
 
 // Hidden makes new Handler with new Hidden option
@@ -152,4 +153,16 @@ func (h Handler) Writer(v io.Writer) *Handler {
 // Writer makes new Handler with new Writer option
 func Writer(v io.Writer) *Handler {
 	return static.Writer(v)
+}
+
+// Message makes new Handler with new Message option
+func (h Handler) Message(v string) *Handler {
+	n := h.Prototype
+	n.Message = v
+	return &Handler{Prototype: n}
+}
+
+// Message makes new Handler with new Message option
+func Message(v string) *Handler {
+	return static.Message(v)
 }

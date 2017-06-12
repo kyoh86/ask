@@ -58,38 +58,40 @@ package ask
 
 {{range .definition}}
 // {{.Type|title}} takes {{.Type}} value from user input
-func (h Handler) {{.Type|title}}(msg string) (*{{.Type}}, error) {
+func (h Handler) {{.Type|title}}() (*{{.Type}}, error) {
 	var v {{.Type}}
-	if err := h.{{.Type|title}}Var(msg, &v); err != nil {
+	if err := h.{{.Type|title}}Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
 // {{.Type|title}} takes {{.Type}} value from user input
-func {{.Type|title}}(msg string) (*{{.Type}}, error) {
-  return static.{{.Type|title}}(msg)
+func {{.Type|title}}() (*{{.Type}}, error) {
+  return static.{{.Type|title}}()
 }
 
-// {{.Type|title}} takes {{.Type}} value from user input into v
-func (h Handler) {{.Type|title}}Var(msg string, v *{{.Type}}) error {
-	return h.Ask(msg, func(input string) error {
-		{{if .Conv -}}
-		p, err := {{.Conv}}
-		if err != nil {
-			return err
-		}
-		*v = {{.Type}}(p)
-		{{- else -}}
-		*v = input
-		{{- end}}
-		return nil
+// {{.Type|title}} sets a {{.Type}} variable, "v" to accept user input
+func (h Handler) {{.Type|title}}Var(v *{{.Type}}) Doer {
+	return doerImpl(func() error {
+		return h.Ask(func(input string) error {
+			{{if .Conv -}}
+			p, err := {{.Conv}}
+			if err != nil {
+				return err
+			}
+			*v = {{.Type}}(p)
+			{{- else -}}
+			*v = input
+			{{- end}}
+			return nil
+		})
 	})
 }
 
-// {{.Type|title}} takes {{.Type}} value from user input into v
-func {{.Type|title}}Var(msg string, v *{{.Type}}) error {
-  return {{.Type|title}}Var(msg, v)
+// {{.Type|title}} sets a {{.Type}} variable, "v" to accept user input
+func {{.Type|title}}Var(v *{{.Type}}) Doer {
+  return {{.Type|title}}Var(v)
 }
 {{end}}
 `

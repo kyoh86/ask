@@ -33,9 +33,9 @@ func (h *Handler) defaultValue() string {
 
 // prompt makes text to mean that the program is waiting for user to type in some answer.
 // A message should take form a question.
-func (h *Handler) prompt(message string) string {
+func (h *Handler) prompt() string {
 	proto := h.Prototype
-	prompt := message
+	prompt := proto.Message
 	def := h.defaultValue()
 	if def != "" {
 		prompt += " [" + proto.Default + "]"
@@ -124,11 +124,19 @@ func (h *Handler) getInput() (string, error) {
 	return "", io.EOF
 }
 
+type Doer interface {
+	Do() error
+}
+
+type doerImpl func() error
+
+func (d doerImpl) Do() error { return d() }
+
 type Parser func(string) error
 
-func (h *Handler) Ask(message string, parse Parser) error {
+func (h *Handler) Ask(parse Parser) error {
 	for i := 0; h.Prototype.Limit < 1 || i < h.Prototype.Limit; i++ {
-		if err := h.AskOnce(message, parse); err != nil {
+		if err := h.AskOnce(parse); err != nil {
 			fmt.Fprintf(h.writer(), "invalid input: %s\n", err)
 		} else {
 			return nil
@@ -137,8 +145,8 @@ func (h *Handler) Ask(message string, parse Parser) error {
 	return errors.New("asked over the limit")
 }
 
-func (h *Handler) AskOnce(message string, parse Parser) error {
-	prompt := h.prompt(message)
+func (h *Handler) AskOnce(parse Parser) error {
+	prompt := h.prompt()
 
 	fmt.Fprint(h.writer(), prompt)
 
