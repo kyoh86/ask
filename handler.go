@@ -149,6 +149,12 @@ func (c *Collector) Push(d Doer) {
 
 type Parser func(string) error
 
+func (h *Handler) Var(parse Parser) Doer {
+	return doerImpl(func() error {
+		return h.Ask(parse)
+	})
+}
+
 func (h *Handler) Ask(parse Parser) error {
 	for i := 0; h.Prototype.Limit < 1 || i < h.Prototype.Limit; i++ {
 		if err := h.AskOnce(parse); err != nil {
