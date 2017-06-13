@@ -21,6 +21,8 @@ type Prototype struct {
 	Reader     io.Reader
 	Writer     io.Writer
 	Message    string
+	Before     func() error
+	BeforeEach func(int) error
 }
 
 // Hidden makes new Handler with new Hidden option
@@ -165,4 +167,28 @@ func (h Handler) Message(v string) *Handler {
 // Message makes new Handler with new Message option
 func Message(v string) *Handler {
 	return static.Message(v)
+}
+
+// Before makes new Handler with new Before option
+func (h Handler) Before(v func() error) *Handler {
+	n := h.Prototype
+	n.Before = v
+	return &Handler{Prototype: n}
+}
+
+// Before makes new Handler with new Before option
+func Before(v func() error) *Handler {
+	return static.Before(v)
+}
+
+// BeforeEach makes new Handler with new BeforeEach option
+func (h Handler) BeforeEach(v func(int) error) *Handler {
+	n := h.Prototype
+	n.BeforeEach = v
+	return &Handler{Prototype: n}
+}
+
+// BeforeEach makes new Handler with new BeforeEach option
+func BeforeEach(v func(int) error) *Handler {
+	return static.BeforeEach(v)
 }

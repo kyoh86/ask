@@ -22,3 +22,7 @@
   type: io.Writer
 - name: Message
   type: string
+- name: Before
+  type: func() error
+- name: BeforeEach
+  type: func(int) error

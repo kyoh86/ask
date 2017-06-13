@@ -4,7 +4,12 @@ type Collector []Doer
 
 func (c Collector) Do() error {
 	for _, d := range c {
-		if err := d.Do(); err != nil {
+		switch err := d.Do(); err {
+		case nil:
+			// continue
+		case Skip:
+			// continue
+		default:
 			return err
 		}
 	}

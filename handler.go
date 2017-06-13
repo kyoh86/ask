@@ -142,6 +142,8 @@ func (f ParseFunc) Parse(input string) error {
 	return f(input)
 }
 
+var Skip = errors.New("skip")
+
 func (h *Handler) Var(parse Parser) Doer {
 	return DoFunc(func() error {
 		return h.Ask(parse)
@@ -153,8 +155,28 @@ func (h *Handler) AskFunc(parse ParseFunc) error {
 }
 
 func (h *Handler) Ask(parse Parser) error {
+	if bef := h.Prototype.Before; bef != nil {
+		switch err := bef(); err {
+		case nil:
+			// continue
+		case Skip:
+			return nil
+		default:
+			return err
+		}
+	}
 	for i := 0; h.Prototype.Limit < 1 || i < h.Prototype.Limit; i++ {
-		if err := h.AskOnce(parse); err != nil {
+		if bef := h.Prototype.BeforeEach; bef != nil {
+			switch err := bef(i); err {
+			case nil:
+				// continue
+			case Skip:
+				return nil
+			default:
+				return err
+			}
+		}
+		if err := h.askOnce(parse); err != nil {
 			fmt.Fprintf(h.writer(), "invalid input: %s\n", err)
 		} else {
 			return nil
@@ -163,7 +185,7 @@ func (h *Handler) Ask(parse Parser) error {
 	return errors.New("asked over the limit")
 }
 
-func (h *Handler) AskOnce(parse Parser) error {
+func (h *Handler) askOnce(parse Parser) error {
 	prompt := h.prompt()
 
 	fmt.Fprint(h.writer(), prompt)
@@ -185,7 +207,12 @@ func (h *Handler) AskOnce(parse Parser) error {
 		h.isValid,
 		parse.Parse,
 	} {
-		if err := p(input); err != nil {
+		switch err := p(input); err {
+		case nil:
+			// continue
+		case Skip:
+			return nil
+		default:
 			return err
 		}
 	}
