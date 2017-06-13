@@ -74,7 +74,7 @@ func {{.Type|title}}() (*{{.Type}}, error) {
 // {{.Type|title}} sets a {{.Type}} variable, "v" to accept user input
 func (h Handler) {{.Type|title}}Var(v *{{.Type}}) Doer {
 	return DoFunc(func() error {
-		return h.Ask(func(input string) error {
+		return h.AskFunc(func(input string) error {
 			{{if .Conv -}}
 			p, err := {{.Conv}}
 			if err != nil {

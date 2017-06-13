@@ -132,12 +132,24 @@ type DoFunc func() error
 
 func (d DoFunc) Do() error { return d() }
 
-type Parser func(string) error
+type Parser interface {
+	Parse(string) error
+}
+
+type ParseFunc func(string) error
+
+func (f ParseFunc) Parse(input string) error {
+	return f(input)
+}
 
 func (h *Handler) Var(parse Parser) Doer {
 	return DoFunc(func() error {
 		return h.Ask(parse)
 	})
+}
+
+func (h *Handler) AskFunc(parse ParseFunc) error {
+	return h.Ask(parse)
 }
 
 func (h *Handler) Ask(parse Parser) error {
@@ -166,12 +178,12 @@ func (h *Handler) AskOnce(parse Parser) error {
 		}
 	}
 
-	for _, p := range []Parser{
+	for _, p := range []ParseFunc{
 		h.isOptional,
 		h.isInEnum,
 		h.isMatched,
 		h.isValid,
-		parse,
+		parse.Parse,
 	} {
 		if err := p(input); err != nil {
 			return err
