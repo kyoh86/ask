@@ -64,7 +64,7 @@ func (s *Service) isOptional(input string) error {
 	if s.Prototype.Optional || input != "" {
 		return nil
 	}
-	return errors.New("empty")
+	return errors.New("it must not be empty")
 }
 
 func (s *Service) isInEnum(input string) error {
@@ -82,11 +82,11 @@ func (s *Service) isInEnum(input string) error {
 	case 1:
 		hint = enum[0]
 	case 2:
-		hint = strings.Join(enum, " or ")
+		hint = strings.Join(enum, " OR ")
 	default:
-		hint = strings.Join(enum[0:len(enum)-1], ", ") + enum[len(enum)-1]
+		hint = strings.Join(enum[0:len(enum)-1], ", ") + " OR " + enum[len(enum)-1]
 	}
-	return fmt.Errorf("not in options %s", hint)
+	return fmt.Errorf("it must be %s", hint)
 }
 
 func (s *Service) isMatched(input string) error {
@@ -97,7 +97,7 @@ func (s *Service) isMatched(input string) error {
 	if matcher.MatchString(input) {
 		return nil
 	}
-	return fmt.Errorf("unmatched for %s", s.Prototype.Matcher.String())
+	return fmt.Errorf("it must be matched for %s", s.Prototype.Matcher.String())
 }
 
 func (s *Service) isValid(input string) error {
@@ -178,7 +178,7 @@ func (s *Service) Ask(parse Parser) error {
 			}
 		}
 		if err := s.askOnce(parse); err != nil {
-			fmt.Fprintf(s.writer(), "invalid input: %s\n", err)
+			fmt.Fprint(s.writer(), strings.Title(err.Error()))
 		} else {
 			return nil
 		}
