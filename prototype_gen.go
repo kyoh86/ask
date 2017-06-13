@@ -25,170 +25,170 @@ type Prototype struct {
 	BeforeEach func(int) error
 }
 
-// Hidden makes new Handler with new Hidden option
-func (h Handler) Hidden(v bool) *Handler {
-	n := h.Prototype
+// Hidden makes new Service with new Hidden option
+func (s Service) Hidden(v bool) *Service {
+	n := s.Prototype
 	n.Hidden = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Hidden makes new Handler with new Hidden option
-func Hidden(v bool) *Handler {
+// Hidden makes new Service with new Hidden option
+func Hidden(v bool) *Service {
 	return static.Hidden(v)
 }
 
-// Default makes new Handler with new Default option
-func (h Handler) Default(v string) *Handler {
-	n := h.Prototype
+// Default makes new Service with new Default option
+func (s Service) Default(v string) *Service {
+	n := s.Prototype
 	n.Default = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Default makes new Handler with new Default option
-func Default(v string) *Handler {
+// Default makes new Service with new Default option
+func Default(v string) *Service {
 	return static.Default(v)
 }
 
-// Envar makes new Handler with new Envar option
-func (h Handler) Envar(v string) *Handler {
-	n := h.Prototype
+// Envar makes new Service with new Envar option
+func (s Service) Envar(v string) *Service {
+	n := s.Prototype
 	n.Envar = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Envar makes new Handler with new Envar option
-func Envar(v string) *Handler {
+// Envar makes new Service with new Envar option
+func Envar(v string) *Service {
 	return static.Envar(v)
 }
 
-// Validation makes new Handler with new Validation option
-func (h Handler) Validation(v func(string) error) *Handler {
-	n := h.Prototype
+// Validation makes new Service with new Validation option
+func (s Service) Validation(v func(string) error) *Service {
+	n := s.Prototype
 	n.Validation = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Validation makes new Handler with new Validation option
-func Validation(v func(string) error) *Handler {
+// Validation makes new Service with new Validation option
+func Validation(v func(string) error) *Service {
 	return static.Validation(v)
 }
 
-// Matcher makes new Handler with new Matcher option
-func (h Handler) Matcher(v *regexp.Regexp) *Handler {
-	n := h.Prototype
+// Matcher makes new Service with new Matcher option
+func (s Service) Matcher(v *regexp.Regexp) *Service {
+	n := s.Prototype
 	n.Matcher = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Matcher makes new Handler with new Matcher option
-func Matcher(v *regexp.Regexp) *Handler {
+// Matcher makes new Service with new Matcher option
+func Matcher(v *regexp.Regexp) *Service {
 	return static.Matcher(v)
 }
 
-// Enum makes new Handler with new Enum option
-func (h Handler) Enum(v []string) *Handler {
-	n := h.Prototype
+// Enum makes new Service with new Enum option
+func (s Service) Enum(v []string) *Service {
+	n := s.Prototype
 	n.Enum = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Enum makes new Handler with new Enum option
-func Enum(v []string) *Handler {
+// Enum makes new Service with new Enum option
+func Enum(v []string) *Service {
 	return static.Enum(v)
 }
 
-// Column makes new Handler with new Column option
-func (h Handler) Column(v int) *Handler {
-	n := h.Prototype
+// Column makes new Service with new Column option
+func (s Service) Column(v int) *Service {
+	n := s.Prototype
 	n.Column = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Column makes new Handler with new Column option
-func Column(v int) *Handler {
+// Column makes new Service with new Column option
+func Column(v int) *Service {
 	return static.Column(v)
 }
 
-// Optional makes new Handler with new Optional option
-func (h Handler) Optional(v bool) *Handler {
-	n := h.Prototype
+// Optional makes new Service with new Optional option
+func (s Service) Optional(v bool) *Service {
+	n := s.Prototype
 	n.Optional = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Optional makes new Handler with new Optional option
-func Optional(v bool) *Handler {
+// Optional makes new Service with new Optional option
+func Optional(v bool) *Service {
 	return static.Optional(v)
 }
 
-// Limit makes new Handler with new Limit option
-func (h Handler) Limit(v int) *Handler {
-	n := h.Prototype
+// Limit makes new Service with new Limit option
+func (s Service) Limit(v int) *Service {
+	n := s.Prototype
 	n.Limit = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Limit makes new Handler with new Limit option
-func Limit(v int) *Handler {
+// Limit makes new Service with new Limit option
+func Limit(v int) *Service {
 	return static.Limit(v)
 }
 
-// Reader makes new Handler with new Reader option
-func (h Handler) Reader(v io.Reader) *Handler {
-	n := h.Prototype
+// Reader makes new Service with new Reader option
+func (s Service) Reader(v io.Reader) *Service {
+	n := s.Prototype
 	n.Reader = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Reader makes new Handler with new Reader option
-func Reader(v io.Reader) *Handler {
+// Reader makes new Service with new Reader option
+func Reader(v io.Reader) *Service {
 	return static.Reader(v)
 }
 
-// Writer makes new Handler with new Writer option
-func (h Handler) Writer(v io.Writer) *Handler {
-	n := h.Prototype
+// Writer makes new Service with new Writer option
+func (s Service) Writer(v io.Writer) *Service {
+	n := s.Prototype
 	n.Writer = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Writer makes new Handler with new Writer option
-func Writer(v io.Writer) *Handler {
+// Writer makes new Service with new Writer option
+func Writer(v io.Writer) *Service {
 	return static.Writer(v)
 }
 
-// Message makes new Handler with new Message option
-func (h Handler) Message(v string) *Handler {
-	n := h.Prototype
+// Message makes new Service with new Message option
+func (s Service) Message(v string) *Service {
+	n := s.Prototype
 	n.Message = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Message makes new Handler with new Message option
-func Message(v string) *Handler {
+// Message makes new Service with new Message option
+func Message(v string) *Service {
 	return static.Message(v)
 }
 
-// Before makes new Handler with new Before option
-func (h Handler) Before(v func() error) *Handler {
-	n := h.Prototype
+// Before makes new Service with new Before option
+func (s Service) Before(v func() error) *Service {
+	n := s.Prototype
 	n.Before = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// Before makes new Handler with new Before option
-func Before(v func() error) *Handler {
+// Before makes new Service with new Before option
+func Before(v func() error) *Service {
 	return static.Before(v)
 }
 
-// BeforeEach makes new Handler with new BeforeEach option
-func (h Handler) BeforeEach(v func(int) error) *Handler {
-	n := h.Prototype
+// BeforeEach makes new Service with new BeforeEach option
+func (s Service) BeforeEach(v func(int) error) *Service {
+	n := s.Prototype
 	n.BeforeEach = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// BeforeEach makes new Handler with new BeforeEach option
-func BeforeEach(v func(int) error) *Handler {
+// BeforeEach makes new Service with new BeforeEach option
+func BeforeEach(v func(int) error) *Service {
 	return static.BeforeEach(v)
 }

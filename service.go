@@ -11,21 +11,21 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
-type Handler struct {
+type Service struct {
 	Prototype
 }
 
-var static Handler
+var static Service
 
 // envar gets value from environment variable
-func (h *Handler) envar() string {
-	return os.Getenv(h.Prototype.Envar)
+func (s *Service) envar() string {
+	return os.Getenv(s.Prototype.Envar)
 }
 
 // defaultValue gets default value from the prototype and environment variable
-func (h *Handler) defaultValue() string {
-	def := h.Prototype.Default
-	if env := h.envar(); env != "" {
+func (s *Service) defaultValue() string {
+	def := s.Prototype.Default
+	if env := s.envar(); env != "" {
 		def = env
 	}
 	return def
@@ -33,10 +33,10 @@ func (h *Handler) defaultValue() string {
 
 // prompt makes text to mean that the program is waiting for user to type in some answer.
 // A message should take form a question.
-func (h *Handler) prompt() string {
-	proto := h.Prototype
+func (s *Service) prompt() string {
+	proto := s.Prototype
 	prompt := proto.Message
-	def := h.defaultValue()
+	def := s.defaultValue()
 	if def != "" {
 		prompt += " [" + proto.Default + "]"
 	}
@@ -46,29 +46,29 @@ func (h *Handler) prompt() string {
 	return prompt + ": "
 }
 
-func (h *Handler) reader() io.Reader {
-	if h.Prototype.Reader != nil {
-		return h.Prototype.Reader
+func (s *Service) reader() io.Reader {
+	if s.Prototype.Reader != nil {
+		return s.Prototype.Reader
 	}
 	return os.Stdin
 }
 
-func (h *Handler) writer() io.Writer {
-	if h.Prototype.Writer != nil {
-		return h.Prototype.Writer
+func (s *Service) writer() io.Writer {
+	if s.Prototype.Writer != nil {
+		return s.Prototype.Writer
 	}
 	return os.Stdout
 }
 
-func (h *Handler) isOptional(input string) error {
-	if h.Prototype.Optional || input != "" {
+func (s *Service) isOptional(input string) error {
+	if s.Prototype.Optional || input != "" {
 		return nil
 	}
 	return errors.New("empty")
 }
 
-func (h *Handler) isInEnum(input string) error {
-	enum := h.Prototype.Enum
+func (s *Service) isInEnum(input string) error {
+	enum := s.Prototype.Enum
 	var hint string
 	switch len(enum) {
 	case 0:
@@ -88,19 +88,19 @@ func (h *Handler) isInEnum(input string) error {
 	return fmt.Errorf("not in options %s", hint)
 }
 
-func (h *Handler) isMatched(input string) error {
-	matcher := h.Prototype.Matcher
+func (s *Service) isMatched(input string) error {
+	matcher := s.Prototype.Matcher
 	if matcher == nil {
 		return nil
 	}
 	if matcher.MatchString(input) {
 		return nil
 	}
-	return fmt.Errorf("unmatched for %s", h.Prototype.Matcher.String())
+	return fmt.Errorf("unmatched for %s", s.Prototype.Matcher.String())
 }
 
-func (h *Handler) isValid(input string) error {
-	validator := h.Prototype.Validation
+func (s *Service) isValid(input string) error {
+	validator := s.Prototype.Validation
 	if validator == nil {
 		return nil
 	}
@@ -110,14 +110,14 @@ func (h *Handler) isValid(input string) error {
 	return nil
 }
 
-func (h *Handler) getInput() (string, error) {
-	if h.Prototype.Hidden && h.Prototype.Reader == nil {
+func (s *Service) getInput() (string, error) {
+	if s.Prototype.Hidden && s.Prototype.Reader == nil {
 		buf, err := terminal.ReadPassword(int(os.Stdin.Fd()))
-		fmt.Fprintln(h.writer())
+		fmt.Fprintln(s.writer())
 		return string(buf), err
 	}
 
-	scanner := bufio.NewScanner(h.reader())
+	scanner := bufio.NewScanner(s.reader())
 	if scanner.Scan() {
 		return scanner.Text(), nil
 	}
@@ -144,18 +144,18 @@ func (f ParseFunc) Parse(input string) error {
 
 var Skip = errors.New("skip")
 
-func (h *Handler) Var(parse Parser) Doer {
+func (s *Service) Var(parse Parser) Doer {
 	return DoFunc(func() error {
-		return h.Ask(parse)
+		return s.Ask(parse)
 	})
 }
 
-func (h *Handler) AskFunc(parse ParseFunc) error {
-	return h.Ask(parse)
+func (s *Service) AskFunc(parse ParseFunc) error {
+	return s.Ask(parse)
 }
 
-func (h *Handler) Ask(parse Parser) error {
-	if bef := h.Prototype.Before; bef != nil {
+func (s *Service) Ask(parse Parser) error {
+	if bef := s.Prototype.Before; bef != nil {
 		switch err := bef(); err {
 		case nil:
 			// continue
@@ -165,8 +165,8 @@ func (h *Handler) Ask(parse Parser) error {
 			return err
 		}
 	}
-	for i := 0; h.Prototype.Limit < 1 || i < h.Prototype.Limit; i++ {
-		if bef := h.Prototype.BeforeEach; bef != nil {
+	for i := 0; s.Prototype.Limit < 1 || i < s.Prototype.Limit; i++ {
+		if bef := s.Prototype.BeforeEach; bef != nil {
 			switch err := bef(i); err {
 			case nil:
 				// continue
@@ -176,8 +176,8 @@ func (h *Handler) Ask(parse Parser) error {
 				return err
 			}
 		}
-		if err := h.askOnce(parse); err != nil {
-			fmt.Fprintf(h.writer(), "invalid input: %s\n", err)
+		if err := s.askOnce(parse); err != nil {
+			fmt.Fprintf(s.writer(), "invalid input: %s\n", err)
 		} else {
 			return nil
 		}
@@ -185,26 +185,26 @@ func (h *Handler) Ask(parse Parser) error {
 	return errors.New("asked over the limit")
 }
 
-func (h *Handler) askOnce(parse Parser) error {
-	prompt := h.prompt()
+func (s *Service) askOnce(parse Parser) error {
+	prompt := s.prompt()
 
-	fmt.Fprint(h.writer(), prompt)
+	fmt.Fprint(s.writer(), prompt)
 
-	input, err := h.getInput()
+	input, err := s.getInput()
 	if err != nil {
 		return err
 	}
 	if input == "" {
-		if def := h.defaultValue(); def != "" {
+		if def := s.defaultValue(); def != "" {
 			input = def
 		}
 	}
 
 	for _, p := range []ParseFunc{
-		h.isOptional,
-		h.isInEnum,
-		h.isMatched,
-		h.isValid,
+		s.isOptional,
+		s.isInEnum,
+		s.isMatched,
+		s.isValid,
 		parse.Parse,
 	} {
 		switch err := p(input); err {

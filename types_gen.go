@@ -5,9 +5,9 @@ package ask
 import "strconv"
 
 // String takes string value from user input
-func (h Handler) String() (*string, error) {
+func (s Service) String() (*string, error) {
 	var v string
-	if err := h.StringVar(&v).Do(); err != nil {
+	if err := s.StringVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -19,9 +19,9 @@ func String() (*string, error) {
 }
 
 // String sets a string variable, "v" to accept user input
-func (h Handler) StringVar(v *string) Doer {
+func (s Service) StringVar(v *string) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			*v = input
 			return nil
 		})
@@ -34,9 +34,9 @@ func StringVar(v *string) Doer {
 }
 
 // Bool takes bool value from user input
-func (h Handler) Bool() (*bool, error) {
+func (s Service) Bool() (*bool, error) {
 	var v bool
-	if err := h.BoolVar(&v).Do(); err != nil {
+	if err := s.BoolVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -48,9 +48,9 @@ func Bool() (*bool, error) {
 }
 
 // Bool sets a bool variable, "v" to accept user input
-func (h Handler) BoolVar(v *bool) Doer {
+func (s Service) BoolVar(v *bool) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseBool(input)
 			if err != nil {
 				return err
@@ -67,9 +67,9 @@ func BoolVar(v *bool) Doer {
 }
 
 // Uint takes uint value from user input
-func (h Handler) Uint() (*uint, error) {
+func (s Service) Uint() (*uint, error) {
 	var v uint
-	if err := h.UintVar(&v).Do(); err != nil {
+	if err := s.UintVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -81,9 +81,9 @@ func Uint() (*uint, error) {
 }
 
 // Uint sets a uint variable, "v" to accept user input
-func (h Handler) UintVar(v *uint) Doer {
+func (s Service) UintVar(v *uint) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, strconv.IntSize)
 			if err != nil {
 				return err
@@ -100,9 +100,9 @@ func UintVar(v *uint) Doer {
 }
 
 // Uint8 takes uint8 value from user input
-func (h Handler) Uint8() (*uint8, error) {
+func (s Service) Uint8() (*uint8, error) {
 	var v uint8
-	if err := h.Uint8Var(&v).Do(); err != nil {
+	if err := s.Uint8Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -114,9 +114,9 @@ func Uint8() (*uint8, error) {
 }
 
 // Uint8 sets a uint8 variable, "v" to accept user input
-func (h Handler) Uint8Var(v *uint8) Doer {
+func (s Service) Uint8Var(v *uint8) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 8)
 			if err != nil {
 				return err
@@ -133,9 +133,9 @@ func Uint8Var(v *uint8) Doer {
 }
 
 // Uint16 takes uint16 value from user input
-func (h Handler) Uint16() (*uint16, error) {
+func (s Service) Uint16() (*uint16, error) {
 	var v uint16
-	if err := h.Uint16Var(&v).Do(); err != nil {
+	if err := s.Uint16Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -147,9 +147,9 @@ func Uint16() (*uint16, error) {
 }
 
 // Uint16 sets a uint16 variable, "v" to accept user input
-func (h Handler) Uint16Var(v *uint16) Doer {
+func (s Service) Uint16Var(v *uint16) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 16)
 			if err != nil {
 				return err
@@ -166,9 +166,9 @@ func Uint16Var(v *uint16) Doer {
 }
 
 // Uint32 takes uint32 value from user input
-func (h Handler) Uint32() (*uint32, error) {
+func (s Service) Uint32() (*uint32, error) {
 	var v uint32
-	if err := h.Uint32Var(&v).Do(); err != nil {
+	if err := s.Uint32Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -180,9 +180,9 @@ func Uint32() (*uint32, error) {
 }
 
 // Uint32 sets a uint32 variable, "v" to accept user input
-func (h Handler) Uint32Var(v *uint32) Doer {
+func (s Service) Uint32Var(v *uint32) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 32)
 			if err != nil {
 				return err
@@ -199,9 +199,9 @@ func Uint32Var(v *uint32) Doer {
 }
 
 // Uint64 takes uint64 value from user input
-func (h Handler) Uint64() (*uint64, error) {
+func (s Service) Uint64() (*uint64, error) {
 	var v uint64
-	if err := h.Uint64Var(&v).Do(); err != nil {
+	if err := s.Uint64Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -213,9 +213,9 @@ func Uint64() (*uint64, error) {
 }
 
 // Uint64 sets a uint64 variable, "v" to accept user input
-func (h Handler) Uint64Var(v *uint64) Doer {
+func (s Service) Uint64Var(v *uint64) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 64)
 			if err != nil {
 				return err
@@ -232,9 +232,9 @@ func Uint64Var(v *uint64) Doer {
 }
 
 // Int takes int value from user input
-func (h Handler) Int() (*int, error) {
+func (s Service) Int() (*int, error) {
 	var v int
-	if err := h.IntVar(&v).Do(); err != nil {
+	if err := s.IntVar(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -246,9 +246,9 @@ func Int() (*int, error) {
 }
 
 // Int sets a int variable, "v" to accept user input
-func (h Handler) IntVar(v *int) Doer {
+func (s Service) IntVar(v *int) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, strconv.IntSize)
 			if err != nil {
 				return err
@@ -265,9 +265,9 @@ func IntVar(v *int) Doer {
 }
 
 // Int8 takes int8 value from user input
-func (h Handler) Int8() (*int8, error) {
+func (s Service) Int8() (*int8, error) {
 	var v int8
-	if err := h.Int8Var(&v).Do(); err != nil {
+	if err := s.Int8Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -279,9 +279,9 @@ func Int8() (*int8, error) {
 }
 
 // Int8 sets a int8 variable, "v" to accept user input
-func (h Handler) Int8Var(v *int8) Doer {
+func (s Service) Int8Var(v *int8) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 8)
 			if err != nil {
 				return err
@@ -298,9 +298,9 @@ func Int8Var(v *int8) Doer {
 }
 
 // Int16 takes int16 value from user input
-func (h Handler) Int16() (*int16, error) {
+func (s Service) Int16() (*int16, error) {
 	var v int16
-	if err := h.Int16Var(&v).Do(); err != nil {
+	if err := s.Int16Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -312,9 +312,9 @@ func Int16() (*int16, error) {
 }
 
 // Int16 sets a int16 variable, "v" to accept user input
-func (h Handler) Int16Var(v *int16) Doer {
+func (s Service) Int16Var(v *int16) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 16)
 			if err != nil {
 				return err
@@ -331,9 +331,9 @@ func Int16Var(v *int16) Doer {
 }
 
 // Int32 takes int32 value from user input
-func (h Handler) Int32() (*int32, error) {
+func (s Service) Int32() (*int32, error) {
 	var v int32
-	if err := h.Int32Var(&v).Do(); err != nil {
+	if err := s.Int32Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -345,9 +345,9 @@ func Int32() (*int32, error) {
 }
 
 // Int32 sets a int32 variable, "v" to accept user input
-func (h Handler) Int32Var(v *int32) Doer {
+func (s Service) Int32Var(v *int32) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 32)
 			if err != nil {
 				return err
@@ -364,9 +364,9 @@ func Int32Var(v *int32) Doer {
 }
 
 // Int64 takes int64 value from user input
-func (h Handler) Int64() (*int64, error) {
+func (s Service) Int64() (*int64, error) {
 	var v int64
-	if err := h.Int64Var(&v).Do(); err != nil {
+	if err := s.Int64Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -378,9 +378,9 @@ func Int64() (*int64, error) {
 }
 
 // Int64 sets a int64 variable, "v" to accept user input
-func (h Handler) Int64Var(v *int64) Doer {
+func (s Service) Int64Var(v *int64) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 64)
 			if err != nil {
 				return err
@@ -397,9 +397,9 @@ func Int64Var(v *int64) Doer {
 }
 
 // Float32 takes float32 value from user input
-func (h Handler) Float32() (*float32, error) {
+func (s Service) Float32() (*float32, error) {
 	var v float32
-	if err := h.Float32Var(&v).Do(); err != nil {
+	if err := s.Float32Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -411,9 +411,9 @@ func Float32() (*float32, error) {
 }
 
 // Float32 sets a float32 variable, "v" to accept user input
-func (h Handler) Float32Var(v *float32) Doer {
+func (s Service) Float32Var(v *float32) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseFloat(input, 32)
 			if err != nil {
 				return err
@@ -430,9 +430,9 @@ func Float32Var(v *float32) Doer {
 }
 
 // Float64 takes float64 value from user input
-func (h Handler) Float64() (*float64, error) {
+func (s Service) Float64() (*float64, error) {
 	var v float64
-	if err := h.Float64Var(&v).Do(); err != nil {
+	if err := s.Float64Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -444,9 +444,9 @@ func Float64() (*float64, error) {
 }
 
 // Float64 sets a float64 variable, "v" to accept user input
-func (h Handler) Float64Var(v *float64) Doer {
+func (s Service) Float64Var(v *float64) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseFloat(input, 64)
 			if err != nil {
 				return err

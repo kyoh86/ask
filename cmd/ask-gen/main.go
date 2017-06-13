@@ -58,9 +58,9 @@ package ask
 
 {{range .definition}}
 // {{.Type|title}} takes {{.Type}} value from user input
-func (h Handler) {{.Type|title}}() (*{{.Type}}, error) {
+func (s Service) {{.Type|title}}() (*{{.Type}}, error) {
 	var v {{.Type}}
-	if err := h.{{.Type|title}}Var(&v).Do(); err != nil {
+	if err := s.{{.Type|title}}Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
@@ -72,9 +72,9 @@ func {{.Type|title}}() (*{{.Type}}, error) {
 }
 
 // {{.Type|title}} sets a {{.Type}} variable, "v" to accept user input
-func (h Handler) {{.Type|title}}Var(v *{{.Type}}) Doer {
+func (s Service) {{.Type|title}}Var(v *{{.Type}}) Doer {
 	return DoFunc(func() error {
-		return h.AskFunc(func(input string) error {
+		return s.AskFunc(func(input string) error {
 			{{if .Conv -}}
 			p, err := {{.Conv}}
 			if err != nil {
@@ -118,15 +118,15 @@ type Prototype struct {
 {{- end}}
 }
 {{range .definition}}
-// {{.Name|title}} makes new Handler with new {{.Name|title}} option
-func (h Handler) {{.Name|title}}(v {{.Type}}) *Handler {
-	n := h.Prototype
+// {{.Name|title}} makes new Service with new {{.Name|title}} option
+func (s Service) {{.Name|title}}(v {{.Type}}) *Service {
+	n := s.Prototype
 	n.{{.Name|title}} = v
-	return &Handler{Prototype: n}
+	return &Service{Prototype: n}
 }
 
-// {{.Name|title}} makes new Handler with new {{.Name|title}} option
-func {{.Name|title}}(v {{.Type}}) *Handler {
+// {{.Name|title}} makes new Service with new {{.Name|title}} option
+func {{.Name|title}}(v {{.Type}}) *Service {
 	return static.{{.Name|title}}(v)
 }
 {{end}}
