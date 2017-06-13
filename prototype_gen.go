@@ -11,7 +11,7 @@ import (
 type Prototype struct {
 	Hidden     bool
 	Default    string
-	Env        string
+	Envar      string
 	Validation func(string) error
 	Matcher    *regexp.Regexp
 	Enum       []string
@@ -49,16 +49,16 @@ func Default(v string) *Handler {
 	return static.Default(v)
 }
 
-// Env makes new Handler with new Env option
-func (h Handler) Env(v string) *Handler {
+// Envar makes new Handler with new Envar option
+func (h Handler) Envar(v string) *Handler {
 	n := h.Prototype
-	n.Env = v
+	n.Envar = v
 	return &Handler{Prototype: n}
 }
 
-// Env makes new Handler with new Env option
-func Env(v string) *Handler {
-	return static.Env(v)
+// Envar makes new Handler with new Envar option
+func Envar(v string) *Handler {
+	return static.Envar(v)
 }
 
 // Validation makes new Handler with new Validation option

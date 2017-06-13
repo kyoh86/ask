@@ -17,15 +17,15 @@ type Handler struct {
 
 var static Handler
 
-// env gets value from environment variable
-func (h *Handler) env() string {
-	return os.Getenv(h.Prototype.Env)
+// envar gets value from environment variable
+func (h *Handler) envar() string {
+	return os.Getenv(h.Prototype.Envar)
 }
 
 // defaultValue gets default value from the prototype and environment variable
 func (h *Handler) defaultValue() string {
 	def := h.Prototype.Default
-	if env := h.env(); env != "" {
+	if env := h.envar(); env != "" {
 		def = env
 	}
 	return def

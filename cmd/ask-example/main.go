@@ -23,7 +23,7 @@ func main() {
 		fmt.Printf("echo: %s\n", *out)
 	}
 	{
-		out, err := ask.Env("ENVAR").Message("envar").String()
+		out, err := ask.Envar("ENVAR").Message("envar").String()
 		if err != nil {
 			panic(err)
 		}

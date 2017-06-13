@@ -2,7 +2,7 @@
   type: bool
 - name: Default
   type: string
-- name: Env
+- name: Envar
   type: string
 - name: Validation
   type: "func(string) error"
