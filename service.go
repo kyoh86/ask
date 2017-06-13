@@ -34,14 +34,14 @@ func (s *Service) defaultValue() string {
 // prompt makes text to mean that the program is waiting for user to type in some answer.
 // A message should take form a question.
 func (s *Service) prompt() string {
-	proto := s.Prototype
-	prompt := proto.Message
+	p := s.Prototype
+	prompt := p.Message
 	def := s.defaultValue()
 	if def != "" {
-		prompt += " [" + proto.Default + "]"
+		prompt += " [" + p.Default + "]"
 	}
-	if proto.Column > 0 {
-		prompt = fmt.Sprintf(fmt.Sprintf("%%%ds", proto.Column), prompt)
+	if p.Column > 0 {
+		prompt = fmt.Sprintf(fmt.Sprintf("%%%ds", p.Column), prompt)
 	}
 	return prompt + ": "
 }
@@ -69,6 +69,12 @@ func (s *Service) isOptional(input string) error {
 
 func (s *Service) isInEnum(input string) error {
 	enum := s.Prototype.Enum
+	for _, e := range enum {
+		if e == input {
+			return nil
+		}
+	}
+
 	var hint string
 	switch len(enum) {
 	case 0:
@@ -79,11 +85,6 @@ func (s *Service) isInEnum(input string) error {
 		hint = strings.Join(enum, " or ")
 	default:
 		hint = strings.Join(enum[0:len(enum)-1], ", ") + enum[len(enum)-1]
-	}
-	for _, e := range enum {
-		if e == input {
-			return nil
-		}
 	}
 	return fmt.Errorf("not in options %s", hint)
 }
