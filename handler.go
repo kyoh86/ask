@@ -128,14 +128,14 @@ type Doer interface {
 	Do() error
 }
 
-type doerImpl func() error
+type DoFunc func() error
 
-func (d doerImpl) Do() error { return d() }
+func (d DoFunc) Do() error { return d() }
 
 type Parser func(string) error
 
 func (h *Handler) Var(parse Parser) Doer {
-	return doerImpl(func() error {
+	return DoFunc(func() error {
 		return h.Ask(parse)
 	})
 }
