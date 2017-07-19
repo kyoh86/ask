@@ -1,28 +1,45 @@
 - type: string
+  name: string
   conv: null
 - type: bool
+  name: bool
   conv: strconv.ParseBool(input)
+- type: bool
+  name: yesNo
+  conv: parseYesNo(input)
 - type: uint
+  name: uint
   conv: strconv.ParseUint(input, 10, strconv.IntSize)
 - type: uint8
+  name: uint8
   conv: strconv.ParseUint(input, 10, 8)
 - type: uint16
+  name: uint16
   conv: strconv.ParseUint(input, 10, 16)
 - type: uint32
+  name: uint32
   conv: strconv.ParseUint(input, 10, 32)
 - type: uint64
+  name: uint64
   conv: strconv.ParseUint(input, 10, 64)
 - type: int
+  name: int
   conv: strconv.ParseInt(input, 10, strconv.IntSize)
 - type: int8
+  name: int8
   conv: strconv.ParseInt(input, 10, 8)
 - type: int16
+  name: int16
   conv: strconv.ParseInt(input, 10, 16)
 - type: int32
+  name: int32
   conv: strconv.ParseInt(input, 10, 32)
 - type: int64
+  name: int64
   conv: strconv.ParseInt(input, 10, 64)
 - type: float32
+  name: float32
   conv: strconv.ParseFloat(input, 32)
 - type: float64
+  name: float64
   conv: strconv.ParseFloat(input, 64)

@@ -16,9 +16,9 @@ func main() {
 }
 
 func generate(definition interface{}, templateText, filename string) (retErr error) {
-	buf, err := ioutil.ReadFile(filename + ".yaml")
-	if err != nil {
-		return err
+	buf, readErr := ioutil.ReadFile(filename + ".yaml")
+	if readErr != nil {
+		return readErr
 	}
 	if err := yaml.Unmarshal(buf, definition); err != nil {
 		return err
@@ -49,6 +49,7 @@ func generate(definition interface{}, templateText, filename string) (retErr err
 func genTypes() {
 	var types []struct {
 		Type string `yaml:"type"`
+		Name string `yaml:"name"`
 		Conv string `yaml:"conv"`
 	}
 
@@ -57,22 +58,22 @@ func genTypes() {
 package ask
 
 {{range .definition}}
-// {{.Type|title}} takes {{.Type}} value from user input
-func (s Service) {{.Type|title}}() (*{{.Type}}, error) {
+// {{.Name|title}} takes {{.Type}} value from user input
+func (s Service) {{.Name|title}}() (*{{.Type}}, error) {
 	var v {{.Type}}
-	if err := s.{{.Type|title}}Var(&v).Do(); err != nil {
+	if err := s.{{.Name|title}}Var(&v).Do(); err != nil {
 		return nil, err
 	}
 	return &v, nil
 }
 
-// {{.Type|title}} takes {{.Type}} value from user input
-func {{.Type|title}}() (*{{.Type}}, error) {
-  return static.{{.Type|title}}()
+// {{.Name|title}} takes {{.Type}} value from user input
+func {{.Name|title}}() (*{{.Type}}, error) {
+  return static.{{.Name|title}}()
 }
 
-// {{.Type|title}} sets a {{.Type}} variable, "v" to accept user input
-func (s Service) {{.Type|title}}Var(v *{{.Type}}) Doer {
+// {{.Name|title}} sets a {{.Type}} variable, "v" to accept user input
+func (s Service) {{.Name|title}}Var(v *{{.Type}}) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			{{if .Conv -}}
@@ -89,9 +90,9 @@ func (s Service) {{.Type|title}}Var(v *{{.Type}}) Doer {
 	})
 }
 
-// {{.Type|title}} sets a {{.Type}} variable, "v" to accept user input
-func {{.Type|title}}Var(v *{{.Type}}) Doer {
-  return {{.Type|title}}Var(v)
+// {{.Name|title}} sets a {{.Type}} variable, "v" to accept user input
+func {{.Name|title}}Var(v *{{.Type}}) Doer {
+  return {{.Name|title}}Var(v)
 }
 {{end}}
 `

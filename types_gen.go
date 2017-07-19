@@ -66,6 +66,39 @@ func BoolVar(v *bool) Doer {
 	return BoolVar(v)
 }
 
+// YesNo takes bool value from user input
+func (s Service) YesNo() (*bool, error) {
+	var v bool
+	if err := s.YesNoVar(&v).Do(); err != nil {
+		return nil, err
+	}
+	return &v, nil
+}
+
+// YesNo takes bool value from user input
+func YesNo() (*bool, error) {
+	return static.YesNo()
+}
+
+// YesNo sets a bool variable, "v" to accept user input
+func (s Service) YesNoVar(v *bool) Doer {
+	return DoFunc(func() error {
+		return s.AskFunc(func(input string) error {
+			p, err := parseYesNo(input)
+			if err != nil {
+				return err
+			}
+			*v = bool(p)
+			return nil
+		})
+	})
+}
+
+// YesNo sets a bool variable, "v" to accept user input
+func YesNoVar(v *bool) Doer {
+	return YesNoVar(v)
+}
+
 // Uint takes uint value from user input
 func (s Service) Uint() (*uint, error) {
 	var v uint
