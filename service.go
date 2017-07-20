@@ -178,7 +178,7 @@ func (s *Service) Ask(parse Parser) error {
 			}
 		}
 		if err := s.askOnce(parse); err != nil {
-			fmt.Fprint(s.writer(), strings.Title(err.Error()))
+			fmt.Fprintln(s.writer(), strings.Title(err.Error()))
 		} else {
 			return nil
 		}
