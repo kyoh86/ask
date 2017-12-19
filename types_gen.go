@@ -2,7 +2,155 @@
 
 package ask
 
-import "strconv"
+import (
+	"errors"
+	"strconv"
+)
+
+// VarType indicates a type of a variable.
+type VarType string
+
+func (t VarType) String() string {
+	return string(t)
+}
+
+const (
+	// VarTypeString indicates the string
+	VarTypeString = VarType("string")
+
+	// VarTypeBool indicates the bool
+	VarTypeBool = VarType("bool")
+
+	// VarTypeYesNo indicates the bool
+	VarTypeYesNo = VarType("yesNo")
+
+	// VarTypeUint indicates the uint
+	VarTypeUint = VarType("uint")
+
+	// VarTypeUint8 indicates the uint8
+	VarTypeUint8 = VarType("uint8")
+
+	// VarTypeUint16 indicates the uint16
+	VarTypeUint16 = VarType("uint16")
+
+	// VarTypeUint32 indicates the uint32
+	VarTypeUint32 = VarType("uint32")
+
+	// VarTypeUint64 indicates the uint64
+	VarTypeUint64 = VarType("uint64")
+
+	// VarTypeInt indicates the int
+	VarTypeInt = VarType("int")
+
+	// VarTypeInt8 indicates the int8
+	VarTypeInt8 = VarType("int8")
+
+	// VarTypeInt16 indicates the int16
+	VarTypeInt16 = VarType("int16")
+
+	// VarTypeInt32 indicates the int32
+	VarTypeInt32 = VarType("int32")
+
+	// VarTypeInt64 indicates the int64
+	VarTypeInt64 = VarType("int64")
+
+	// VarTypeFloat32 indicates the float32
+	VarTypeFloat32 = VarType("float32")
+
+	// VarTypeFloat64 indicates the float64
+	VarTypeFloat64 = VarType("float64")
+)
+
+// VarTypes is the all types.
+func VarTypes() []VarType {
+	return []VarType{
+		VarTypeString,
+
+		VarTypeBool,
+
+		VarTypeYesNo,
+
+		VarTypeUint,
+
+		VarTypeUint8,
+
+		VarTypeUint16,
+
+		VarTypeUint32,
+
+		VarTypeUint64,
+
+		VarTypeInt,
+
+		VarTypeInt8,
+
+		VarTypeInt16,
+
+		VarTypeInt32,
+
+		VarTypeInt64,
+
+		VarTypeFloat32,
+
+		VarTypeFloat64,
+	}
+}
+
+// Interface will get a value that type of 't'.
+func (s Service) Interface(t VarType) (interface{}, error) {
+	switch t {
+	case VarTypeString:
+		return s.String()
+
+	case VarTypeBool:
+		return s.Bool()
+
+	case VarTypeYesNo:
+		return s.YesNo()
+
+	case VarTypeUint:
+		return s.Uint()
+
+	case VarTypeUint8:
+		return s.Uint8()
+
+	case VarTypeUint16:
+		return s.Uint16()
+
+	case VarTypeUint32:
+		return s.Uint32()
+
+	case VarTypeUint64:
+		return s.Uint64()
+
+	case VarTypeInt:
+		return s.Int()
+
+	case VarTypeInt8:
+		return s.Int8()
+
+	case VarTypeInt16:
+		return s.Int16()
+
+	case VarTypeInt32:
+		return s.Int32()
+
+	case VarTypeInt64:
+		return s.Int64()
+
+	case VarTypeFloat32:
+		return s.Float32()
+
+	case VarTypeFloat64:
+		return s.Float64()
+	}
+	return nil, errors.New("invalid type")
+}
+
+// Interface will get a value that type of 't'.
+func Interface(t VarType) (interface{}, error) {
+	return static.Interface(t)
+}
 
 // String takes string value from user input
 func (s Service) String() (*string, error) {
