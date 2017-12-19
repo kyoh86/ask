@@ -73,7 +73,7 @@ func {{.Name|title}}() (*{{.Type}}, error) {
   return static.{{.Name|title}}()
 }
 
-// {{.Name|title}} sets a {{.Type}} variable, "v" to accept user input
+// {{.Name|title}}Var sets a {{.Type}} variable, "v" to accept user input
 func (s Service) {{.Name|title}}Var(v *{{.Type}}) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -91,9 +91,9 @@ func (s Service) {{.Name|title}}Var(v *{{.Type}}) Doer {
 	})
 }
 
-// {{.Name|title}} sets a {{.Type}} variable, "v" to accept user input
+// {{.Name|title}}Var sets a {{.Type}} variable, "v" to accept user input
 func {{.Name|title}}Var(v *{{.Type}}) Doer {
-  return {{.Name|title}}Var(v)
+  return static.{{.Name|title}}Var(v)
 }
 {{end}}
 `
