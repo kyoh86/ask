@@ -63,6 +63,44 @@ func genTypes() {
 
 package ask
 
+// VarType indicates a type of a variable.
+type VarType string
+func (t VarType) String() string {
+	return string(t)
+}
+
+const (
+{{- range .definition}}
+	// VarType{{.Name|title}} indicates the {{.Type}}
+	VarType{{.Name|title}} = VarType("{{.Name}}")
+{{end -}}
+)
+
+// VarTypes is the all types.
+func VarTypes() []VarType {
+	return []VarType{
+{{- range .definition}}
+		VarType{{.Name|title}},
+{{end -}}
+	}
+}
+
+// Interface will get a value that type of 't'.
+func (s Service) Interface(t VarType) (interface{}, error) {
+	switch t {
+{{- range .definition}}
+	case VarType{{.Name|title}}:
+		return s.{{.Name|title}}()
+{{end -}}
+	}
+	return nil, errors.New("invalid type")
+}
+
+// Interface will get a value that type of 't'.
+func Interface(t VarType) (interface{}, error) {
+  return static.Interface(t)
+}
+
 {{range .definition}}
 // {{.Name|title}} takes {{.Type}} value from user input
 func (s Service) {{.Name|title}}() (*{{.Type}}, error) {
