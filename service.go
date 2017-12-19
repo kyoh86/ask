@@ -11,6 +11,7 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
+// Service is the handler to ask values.
 type Service struct {
 	Prototype
 }
@@ -125,42 +126,47 @@ func (s *Service) getInput() (string, error) {
 	return "", io.EOF
 }
 
+// Doer will do.
 type Doer interface {
 	Do() error
 }
 
-type DoFunc func() error
+type doFunc func() error
 
-func (d DoFunc) Do() error { return d() }
+func (d doFunc) Do() error { return d() }
 
-type Parser interface {
+type parser interface {
 	Parse(string) error
 }
 
-type ParseFunc func(string) error
+type parseFunc func(string) error
 
-func (f ParseFunc) Parse(input string) error {
+func (f parseFunc) Parse(input string) error {
 	return f(input)
 }
 
-var Skip = errors.New("skip")
+// ErrSkip will skip to ask a value.
+var ErrSkip = errors.New("skip")
 
-func (s *Service) Var(parse Parser) Doer {
-	return DoFunc(func() error {
+// Var sets parser.
+func (s *Service) Var(parse parser) Doer {
+	return doFunc(func() error {
 		return s.Ask(parse)
 	})
 }
 
-func (s *Service) AskFunc(parse ParseFunc) error {
+// AskFunc will get a value from input and pass it to parser func.
+func (s *Service) AskFunc(parse parseFunc) error {
 	return s.Ask(parse)
 }
 
-func (s *Service) Ask(parse Parser) error {
+// Ask will get a value from input and pass it to parser.
+func (s *Service) Ask(parse parser) error {
 	if bef := s.Prototype.Before; bef != nil {
 		switch err := bef(); err {
 		case nil:
 			// continue
-		case Skip:
+		case ErrSkip:
 			return nil
 		default:
 			return err
@@ -171,7 +177,7 @@ func (s *Service) Ask(parse Parser) error {
 			switch err := bef(i); err {
 			case nil:
 				// continue
-			case Skip:
+			case ErrSkip:
 				return nil
 			default:
 				return err
@@ -186,7 +192,7 @@ func (s *Service) Ask(parse Parser) error {
 	return errors.New("asked over the limit")
 }
 
-func (s *Service) askOnce(parse Parser) error {
+func (s *Service) askOnce(parse parser) error {
 	prompt := s.prompt()
 
 	fmt.Fprint(s.writer(), prompt)
@@ -201,7 +207,7 @@ func (s *Service) askOnce(parse Parser) error {
 		}
 	}
 
-	for _, p := range []ParseFunc{
+	for _, p := range []parseFunc{
 		s.isOptional,
 		s.isInEnum,
 		s.isMatched,
@@ -211,7 +217,7 @@ func (s *Service) askOnce(parse Parser) error {
 		switch err := p(input); err {
 		case nil:
 			// continue
-		case Skip:
+		case ErrSkip:
 			return nil
 		default:
 			return err

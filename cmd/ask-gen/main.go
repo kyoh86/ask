@@ -1,4 +1,5 @@
 // !build gen
+
 package main
 
 import (
@@ -25,11 +26,15 @@ func generate(definition interface{}, templateText, filename string) (retErr err
 		return err
 	}
 
-	out, err := os.OpenFile(filename+"_gen.go", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644)
-	if err != nil {
-		return err
+	out, openErr := os.OpenFile(filename+"_gen.go", os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644)
+	if openErr != nil {
+		return openErr
 	}
-	defer out.Close()
+	defer func() {
+		if err := out.Close(); err != nil && retErr == nil {
+			retErr = err
+		}
+	}()
 
 	tmp, err := template.New("definition").
 		Funcs(template.FuncMap{"title": strings.Title}).
@@ -75,7 +80,7 @@ func {{.Name|title}}() (*{{.Type}}, error) {
 
 // {{.Name|title}}Var sets a {{.Type}} variable, "v" to accept user input
 func (s Service) {{.Name|title}}Var(v *{{.Type}}) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			{{if .Conv -}}
 			p, err := {{.Conv}}

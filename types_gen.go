@@ -20,7 +20,7 @@ func String() (*string, error) {
 
 // StringVar sets a string variable, "v" to accept user input
 func (s Service) StringVar(v *string) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			*v = input
 			return nil
@@ -49,7 +49,7 @@ func Bool() (*bool, error) {
 
 // BoolVar sets a bool variable, "v" to accept user input
 func (s Service) BoolVar(v *bool) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseBool(input)
 			if err != nil {
@@ -82,7 +82,7 @@ func YesNo() (*bool, error) {
 
 // YesNoVar sets a bool variable, "v" to accept user input
 func (s Service) YesNoVar(v *bool) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := parseYesNo(input)
 			if err != nil {
@@ -115,7 +115,7 @@ func Uint() (*uint, error) {
 
 // UintVar sets a uint variable, "v" to accept user input
 func (s Service) UintVar(v *uint) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, strconv.IntSize)
 			if err != nil {
@@ -148,7 +148,7 @@ func Uint8() (*uint8, error) {
 
 // Uint8Var sets a uint8 variable, "v" to accept user input
 func (s Service) Uint8Var(v *uint8) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 8)
 			if err != nil {
@@ -181,7 +181,7 @@ func Uint16() (*uint16, error) {
 
 // Uint16Var sets a uint16 variable, "v" to accept user input
 func (s Service) Uint16Var(v *uint16) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 16)
 			if err != nil {
@@ -214,7 +214,7 @@ func Uint32() (*uint32, error) {
 
 // Uint32Var sets a uint32 variable, "v" to accept user input
 func (s Service) Uint32Var(v *uint32) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 32)
 			if err != nil {
@@ -247,7 +247,7 @@ func Uint64() (*uint64, error) {
 
 // Uint64Var sets a uint64 variable, "v" to accept user input
 func (s Service) Uint64Var(v *uint64) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseUint(input, 10, 64)
 			if err != nil {
@@ -280,7 +280,7 @@ func Int() (*int, error) {
 
 // IntVar sets a int variable, "v" to accept user input
 func (s Service) IntVar(v *int) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, strconv.IntSize)
 			if err != nil {
@@ -313,7 +313,7 @@ func Int8() (*int8, error) {
 
 // Int8Var sets a int8 variable, "v" to accept user input
 func (s Service) Int8Var(v *int8) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 8)
 			if err != nil {
@@ -346,7 +346,7 @@ func Int16() (*int16, error) {
 
 // Int16Var sets a int16 variable, "v" to accept user input
 func (s Service) Int16Var(v *int16) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 16)
 			if err != nil {
@@ -379,7 +379,7 @@ func Int32() (*int32, error) {
 
 // Int32Var sets a int32 variable, "v" to accept user input
 func (s Service) Int32Var(v *int32) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 32)
 			if err != nil {
@@ -412,7 +412,7 @@ func Int64() (*int64, error) {
 
 // Int64Var sets a int64 variable, "v" to accept user input
 func (s Service) Int64Var(v *int64) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseInt(input, 10, 64)
 			if err != nil {
@@ -445,7 +445,7 @@ func Float32() (*float32, error) {
 
 // Float32Var sets a float32 variable, "v" to accept user input
 func (s Service) Float32Var(v *float32) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseFloat(input, 32)
 			if err != nil {
@@ -478,7 +478,7 @@ func Float64() (*float64, error) {
 
 // Float64Var sets a float64 variable, "v" to accept user input
 func (s Service) Float64Var(v *float64) Doer {
-	return DoFunc(func() error {
+	return doFunc(func() error {
 		return s.AskFunc(func(input string) error {
 			p, err := strconv.ParseFloat(input, 64)
 			if err != nil {
