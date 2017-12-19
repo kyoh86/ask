@@ -18,7 +18,7 @@ func String() (*string, error) {
 	return static.String()
 }
 
-// String sets a string variable, "v" to accept user input
+// StringVar sets a string variable, "v" to accept user input
 func (s Service) StringVar(v *string) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -28,9 +28,9 @@ func (s Service) StringVar(v *string) Doer {
 	})
 }
 
-// String sets a string variable, "v" to accept user input
+// StringVar sets a string variable, "v" to accept user input
 func StringVar(v *string) Doer {
-	return StringVar(v)
+	return static.StringVar(v)
 }
 
 // Bool takes bool value from user input
@@ -47,7 +47,7 @@ func Bool() (*bool, error) {
 	return static.Bool()
 }
 
-// Bool sets a bool variable, "v" to accept user input
+// BoolVar sets a bool variable, "v" to accept user input
 func (s Service) BoolVar(v *bool) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -61,9 +61,9 @@ func (s Service) BoolVar(v *bool) Doer {
 	})
 }
 
-// Bool sets a bool variable, "v" to accept user input
+// BoolVar sets a bool variable, "v" to accept user input
 func BoolVar(v *bool) Doer {
-	return BoolVar(v)
+	return static.BoolVar(v)
 }
 
 // YesNo takes bool value from user input
@@ -80,7 +80,7 @@ func YesNo() (*bool, error) {
 	return static.YesNo()
 }
 
-// YesNo sets a bool variable, "v" to accept user input
+// YesNoVar sets a bool variable, "v" to accept user input
 func (s Service) YesNoVar(v *bool) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -94,9 +94,9 @@ func (s Service) YesNoVar(v *bool) Doer {
 	})
 }
 
-// YesNo sets a bool variable, "v" to accept user input
+// YesNoVar sets a bool variable, "v" to accept user input
 func YesNoVar(v *bool) Doer {
-	return YesNoVar(v)
+	return static.YesNoVar(v)
 }
 
 // Uint takes uint value from user input
@@ -113,7 +113,7 @@ func Uint() (*uint, error) {
 	return static.Uint()
 }
 
-// Uint sets a uint variable, "v" to accept user input
+// UintVar sets a uint variable, "v" to accept user input
 func (s Service) UintVar(v *uint) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -127,9 +127,9 @@ func (s Service) UintVar(v *uint) Doer {
 	})
 }
 
-// Uint sets a uint variable, "v" to accept user input
+// UintVar sets a uint variable, "v" to accept user input
 func UintVar(v *uint) Doer {
-	return UintVar(v)
+	return static.UintVar(v)
 }
 
 // Uint8 takes uint8 value from user input
@@ -146,7 +146,7 @@ func Uint8() (*uint8, error) {
 	return static.Uint8()
 }
 
-// Uint8 sets a uint8 variable, "v" to accept user input
+// Uint8Var sets a uint8 variable, "v" to accept user input
 func (s Service) Uint8Var(v *uint8) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -160,9 +160,9 @@ func (s Service) Uint8Var(v *uint8) Doer {
 	})
 }
 
-// Uint8 sets a uint8 variable, "v" to accept user input
+// Uint8Var sets a uint8 variable, "v" to accept user input
 func Uint8Var(v *uint8) Doer {
-	return Uint8Var(v)
+	return static.Uint8Var(v)
 }
 
 // Uint16 takes uint16 value from user input
@@ -179,7 +179,7 @@ func Uint16() (*uint16, error) {
 	return static.Uint16()
 }
 
-// Uint16 sets a uint16 variable, "v" to accept user input
+// Uint16Var sets a uint16 variable, "v" to accept user input
 func (s Service) Uint16Var(v *uint16) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -193,9 +193,9 @@ func (s Service) Uint16Var(v *uint16) Doer {
 	})
 }
 
-// Uint16 sets a uint16 variable, "v" to accept user input
+// Uint16Var sets a uint16 variable, "v" to accept user input
 func Uint16Var(v *uint16) Doer {
-	return Uint16Var(v)
+	return static.Uint16Var(v)
 }
 
 // Uint32 takes uint32 value from user input
@@ -212,7 +212,7 @@ func Uint32() (*uint32, error) {
 	return static.Uint32()
 }
 
-// Uint32 sets a uint32 variable, "v" to accept user input
+// Uint32Var sets a uint32 variable, "v" to accept user input
 func (s Service) Uint32Var(v *uint32) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -226,9 +226,9 @@ func (s Service) Uint32Var(v *uint32) Doer {
 	})
 }
 
-// Uint32 sets a uint32 variable, "v" to accept user input
+// Uint32Var sets a uint32 variable, "v" to accept user input
 func Uint32Var(v *uint32) Doer {
-	return Uint32Var(v)
+	return static.Uint32Var(v)
 }
 
 // Uint64 takes uint64 value from user input
@@ -245,7 +245,7 @@ func Uint64() (*uint64, error) {
 	return static.Uint64()
 }
 
-// Uint64 sets a uint64 variable, "v" to accept user input
+// Uint64Var sets a uint64 variable, "v" to accept user input
 func (s Service) Uint64Var(v *uint64) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -259,9 +259,9 @@ func (s Service) Uint64Var(v *uint64) Doer {
 	})
 }
 
-// Uint64 sets a uint64 variable, "v" to accept user input
+// Uint64Var sets a uint64 variable, "v" to accept user input
 func Uint64Var(v *uint64) Doer {
-	return Uint64Var(v)
+	return static.Uint64Var(v)
 }
 
 // Int takes int value from user input
@@ -278,7 +278,7 @@ func Int() (*int, error) {
 	return static.Int()
 }
 
-// Int sets a int variable, "v" to accept user input
+// IntVar sets a int variable, "v" to accept user input
 func (s Service) IntVar(v *int) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -292,9 +292,9 @@ func (s Service) IntVar(v *int) Doer {
 	})
 }
 
-// Int sets a int variable, "v" to accept user input
+// IntVar sets a int variable, "v" to accept user input
 func IntVar(v *int) Doer {
-	return IntVar(v)
+	return static.IntVar(v)
 }
 
 // Int8 takes int8 value from user input
@@ -311,7 +311,7 @@ func Int8() (*int8, error) {
 	return static.Int8()
 }
 
-// Int8 sets a int8 variable, "v" to accept user input
+// Int8Var sets a int8 variable, "v" to accept user input
 func (s Service) Int8Var(v *int8) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -325,9 +325,9 @@ func (s Service) Int8Var(v *int8) Doer {
 	})
 }
 
-// Int8 sets a int8 variable, "v" to accept user input
+// Int8Var sets a int8 variable, "v" to accept user input
 func Int8Var(v *int8) Doer {
-	return Int8Var(v)
+	return static.Int8Var(v)
 }
 
 // Int16 takes int16 value from user input
@@ -344,7 +344,7 @@ func Int16() (*int16, error) {
 	return static.Int16()
 }
 
-// Int16 sets a int16 variable, "v" to accept user input
+// Int16Var sets a int16 variable, "v" to accept user input
 func (s Service) Int16Var(v *int16) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -358,9 +358,9 @@ func (s Service) Int16Var(v *int16) Doer {
 	})
 }
 
-// Int16 sets a int16 variable, "v" to accept user input
+// Int16Var sets a int16 variable, "v" to accept user input
 func Int16Var(v *int16) Doer {
-	return Int16Var(v)
+	return static.Int16Var(v)
 }
 
 // Int32 takes int32 value from user input
@@ -377,7 +377,7 @@ func Int32() (*int32, error) {
 	return static.Int32()
 }
 
-// Int32 sets a int32 variable, "v" to accept user input
+// Int32Var sets a int32 variable, "v" to accept user input
 func (s Service) Int32Var(v *int32) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -391,9 +391,9 @@ func (s Service) Int32Var(v *int32) Doer {
 	})
 }
 
-// Int32 sets a int32 variable, "v" to accept user input
+// Int32Var sets a int32 variable, "v" to accept user input
 func Int32Var(v *int32) Doer {
-	return Int32Var(v)
+	return static.Int32Var(v)
 }
 
 // Int64 takes int64 value from user input
@@ -410,7 +410,7 @@ func Int64() (*int64, error) {
 	return static.Int64()
 }
 
-// Int64 sets a int64 variable, "v" to accept user input
+// Int64Var sets a int64 variable, "v" to accept user input
 func (s Service) Int64Var(v *int64) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -424,9 +424,9 @@ func (s Service) Int64Var(v *int64) Doer {
 	})
 }
 
-// Int64 sets a int64 variable, "v" to accept user input
+// Int64Var sets a int64 variable, "v" to accept user input
 func Int64Var(v *int64) Doer {
-	return Int64Var(v)
+	return static.Int64Var(v)
 }
 
 // Float32 takes float32 value from user input
@@ -443,7 +443,7 @@ func Float32() (*float32, error) {
 	return static.Float32()
 }
 
-// Float32 sets a float32 variable, "v" to accept user input
+// Float32Var sets a float32 variable, "v" to accept user input
 func (s Service) Float32Var(v *float32) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -457,9 +457,9 @@ func (s Service) Float32Var(v *float32) Doer {
 	})
 }
 
-// Float32 sets a float32 variable, "v" to accept user input
+// Float32Var sets a float32 variable, "v" to accept user input
 func Float32Var(v *float32) Doer {
-	return Float32Var(v)
+	return static.Float32Var(v)
 }
 
 // Float64 takes float64 value from user input
@@ -476,7 +476,7 @@ func Float64() (*float64, error) {
 	return static.Float64()
 }
 
-// Float64 sets a float64 variable, "v" to accept user input
+// Float64Var sets a float64 variable, "v" to accept user input
 func (s Service) Float64Var(v *float64) Doer {
 	return DoFunc(func() error {
 		return s.AskFunc(func(input string) error {
@@ -490,7 +490,7 @@ func (s Service) Float64Var(v *float64) Doer {
 	})
 }
 
-// Float64 sets a float64 variable, "v" to accept user input
+// Float64Var sets a float64 variable, "v" to accept user input
 func Float64Var(v *float64) Doer {
-	return Float64Var(v)
+	return static.Float64Var(v)
 }
