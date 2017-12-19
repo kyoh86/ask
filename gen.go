@@ -1,3 +1,3 @@
 package ask
 
-//go:generate go run cmd/ask-gen/main.go
+//go:generate go run -tags=gen cmd/ask-gen/main.go
