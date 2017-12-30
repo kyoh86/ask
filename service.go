@@ -44,7 +44,7 @@ func (s *Service) prompt() string {
 	if p.Column > 0 {
 		prompt = fmt.Sprintf(fmt.Sprintf("%%%ds", p.Column), prompt)
 	}
-	return prompt + ": "
+	return prompt + " : "
 }
 
 func (s *Service) reader() io.Reader {
@@ -184,7 +184,7 @@ func (s *Service) Ask(parse parser) error {
 			}
 		}
 		if err := s.askOnce(parse); err != nil {
-			fmt.Fprintln(s.writer(), strings.Title(err.Error()))
+			fmt.Fprintln(s.writer(), err.Error())
 		} else {
 			return nil
 		}
