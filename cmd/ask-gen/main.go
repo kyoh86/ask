@@ -52,6 +52,7 @@ func generate(definition interface{}, templateText, filename string) (retErr err
 	return nil
 }
 
+//nolint: unused
 func genTypes() {
 	var types []struct {
 		Type string `yaml:"type"`
@@ -146,6 +147,7 @@ func {{.Name|title}}Var(v *{{.Type}}) Doer {
 	}
 }
 
+//nolint: unused
 func genPrototype() {
 	var options []struct {
 		Name string `yaml:"name"`
