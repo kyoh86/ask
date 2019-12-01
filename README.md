@@ -2,6 +2,9 @@
 
 A golang library to ask user for typed answers, passwords and stuff
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/kyoh86/ask)](https://goreportcard.com/report/github.com/kyoh86/ask)
+[![Coverage Status](https://img.shields.io/codecov/c/github/kyoh86/ask.svg)](https://codecov.io/gh/kyoh86/ask)
+
 ## Install
 
 ```
