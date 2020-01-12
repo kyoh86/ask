@@ -63,7 +63,7 @@ func (s *Service) writer() io.Writer {
 
 func (s *Service) isOptional(input string) error {
 	if s.Prototype.Optional || input != "" {
-		return nil
+		return ErrSkip
 	}
 	return errors.New("it must not be empty")
 }
@@ -166,8 +166,6 @@ func (s *Service) Ask(parse parser) error {
 		switch err := bef(); err {
 		case nil:
 			// continue
-		case ErrSkip:
-			return nil
 		default:
 			return err
 		}
@@ -177,8 +175,6 @@ func (s *Service) Ask(parse parser) error {
 			switch err := bef(i); err {
 			case nil:
 				// continue
-			case ErrSkip:
-				return nil
 			default:
 				return err
 			}
@@ -217,8 +213,6 @@ func (s *Service) askOnce(parse parser) error {
 		switch err := p(input); err {
 		case nil:
 			// continue
-		case ErrSkip:
-			return nil
 		default:
 			return err
 		}
