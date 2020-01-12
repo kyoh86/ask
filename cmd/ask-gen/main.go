@@ -120,7 +120,7 @@ func {{.Name|title}}() (*{{.Type}}, error) {
 // {{.Name|title}}Var sets a {{.Type}} variable, "v" to accept user input
 func (s Service) {{.Name|title}}Var(v *{{.Type}}) Doer {
 	return doFunc(func() error {
-		return s.AskFunc(func(input string) error {
+		return s.AskParseFunc(func(input string) error {
 			{{if .Conv -}}
 			p, err := {{.Conv}}
 			if err != nil {

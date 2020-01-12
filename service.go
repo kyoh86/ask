@@ -2,6 +2,7 @@ package ask
 
 import (
 	"bufio"
+	"encoding"
 	"errors"
 	"fmt"
 	"io"
@@ -138,33 +139,40 @@ type doFunc func() error
 
 func (d doFunc) Do() error { return d() }
 
-type parser interface {
-	Parse(string) error
-}
-
-type parseFunc func(string) error
-
-func (f parseFunc) Parse(input string) error {
-	return f(input)
-}
-
 // ErrSkip will skip to ask a value.
 var ErrSkip = errors.New("skip")
 
-// Var sets parser.
-func (s *Service) Var(parse parser) Doer {
+// Var sets encoding.TextUnmarshaler.
+func (s *Service) Var(parse encoding.TextUnmarshaler) Doer {
 	return doFunc(func() error {
 		return s.Ask(parse)
 	})
 }
 
-// AskFunc will get a value from input and pass it to parser func.
-func (s *Service) AskFunc(parse parseFunc) error {
+type UnmarshalFunc func([]byte) error
+
+func (f UnmarshalFunc) UnmarshalText(raw []byte) error {
+	return f(raw)
+}
+
+type ParseFunc func(string) error
+
+func (f ParseFunc) UnmarshalText(raw []byte) error {
+	return f(string(raw))
+}
+
+// AskFunc will get a value from input and pass it to unmarshal func.
+func (s *Service) AskUnmarshalFunc(unmarshal UnmarshalFunc) error {
+	return s.Ask(unmarshal)
+}
+
+// AskParseFunc will get a value from input and pass it to parser func.
+func (s *Service) AskParseFunc(parse ParseFunc) error {
 	return s.Ask(parse)
 }
 
-// Ask will get a value from input and pass it to parser.
-func (s *Service) Ask(parse parser) error {
+// Ask will get a value from input and pass it to encoding.TextUnmarshaler.
+func (s *Service) Ask(unmarshaler encoding.TextUnmarshaler) error {
 	if bef := s.Prototype.Before; bef != nil {
 		switch err := bef(); err {
 		case nil:
@@ -182,7 +190,7 @@ func (s *Service) Ask(parse parser) error {
 				return err
 			}
 		}
-		if err := s.askOnce(parse); err != nil {
+		if err := s.askOnce(unmarshaler); err != nil {
 			fmt.Fprintln(s.writer(), err.Error())
 		} else {
 			return nil
@@ -191,7 +199,7 @@ func (s *Service) Ask(parse parser) error {
 	return errors.New("asked over the limit")
 }
 
-func (s *Service) askOnce(parse parser) error {
+func (s *Service) askOnce(unmarshaler encoding.TextUnmarshaler) error {
 	prompt := s.prompt()
 
 	fmt.Fprint(s.writer(), prompt)
@@ -206,12 +214,12 @@ func (s *Service) askOnce(parse parser) error {
 		}
 	}
 
-	for _, p := range []parseFunc{
+	for _, p := range []ParseFunc{
 		s.isOptional,
 		s.isInEnum,
 		s.isMatched,
 		s.isValid,
-		parse.Parse,
+		func(s string) error { return unmarshaler.UnmarshalText([]byte(s)) },
 	} {
 		switch err := p(input); err {
 		case nil:
