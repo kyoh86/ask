@@ -66,7 +66,10 @@ func (s *Service) writer() io.Writer {
 }
 
 func (s *Service) isOptional(input string) error {
-	if s.Prototype.Optional || input != "" {
+	if input != "" {
+		return nil
+	}
+	if s.Prototype.Optional {
 		return ErrSkip
 	}
 	return errors.New("it must not be empty")
