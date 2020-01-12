@@ -39,7 +39,10 @@ func (s *Service) prompt() string {
 	prompt := p.Message
 	def := s.defaultValue()
 	if def != "" {
-		prompt += " [" + p.Default + "]"
+		if p.Hidden {
+			def = "*****"
+		}
+		prompt += " [" + def + "]"
 	}
 	if p.Column > 0 {
 		prompt = fmt.Sprintf(fmt.Sprintf("%%%ds", p.Column), prompt)
