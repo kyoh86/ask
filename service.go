@@ -190,10 +190,13 @@ func (s *Service) Ask(unmarshaler encoding.TextUnmarshaler) error {
 				return err
 			}
 		}
-		if err := s.askOnce(unmarshaler); err != nil {
-			fmt.Fprintln(s.writer(), err.Error())
-		} else {
+		switch err := s.askOnce(unmarshaler); err {
+		case ErrSkip:
 			return nil
+		case nil:
+			return nil
+		default:
+			fmt.Fprintln(s.writer(), err.Error())
 		}
 	}
 	return errors.New("asked over the limit")
