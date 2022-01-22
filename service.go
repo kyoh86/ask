@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 // Service is the handler to ask values.
@@ -121,7 +121,7 @@ func (s *Service) isValid(input string) error {
 
 func (s *Service) getInput() (string, error) {
 	if s.Prototype.Hidden && s.Prototype.Reader == nil {
-		buf, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+		buf, err := term.ReadPassword(int(os.Stdin.Fd()))
 		fmt.Fprintln(s.writer())
 		return string(buf), err
 	}
