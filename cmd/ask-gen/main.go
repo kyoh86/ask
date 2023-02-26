@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"strings"
 
+	"golang.org/x/text/cases"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -37,7 +37,7 @@ func generate(definition interface{}, templateText, filename string) (retErr err
 	}()
 
 	tmp, err := template.New("definition").
-		Funcs(template.FuncMap{"title": strings.Title}).
+		Funcs(template.FuncMap{"title": cases.Title}).
 		Parse(templateText)
 	if err != nil {
 		return err
@@ -52,7 +52,7 @@ func generate(definition interface{}, templateText, filename string) (retErr err
 	return nil
 }
 
-//nolint: unused
+// nolint: unused
 func genTypes() {
 	var types []struct {
 		Type string `yaml:"type"`
@@ -147,7 +147,7 @@ func {{.Name|title}}Var(v *{{.Type}}) Doer {
 	}
 }
 
-//nolint: unused
+// nolint: unused
 func genPrototype() {
 	var options []struct {
 		Name string `yaml:"name"`
