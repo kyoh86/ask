@@ -15,7 +15,7 @@ jobs:
         run: go get -v -t -d ./...
       - name: vendoring
         run: go mod vendor
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v7
         with:
           name: repository
           path: .
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: 1.19
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v8
         with:
           name: repository
           path: .
@@ -49,7 +49,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version: 1.19
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v8
         with:
           name: repository
           path: .
