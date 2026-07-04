@@ -28,7 +28,7 @@ jobs:
         uses: golangci/golangci-lint-action@v9
         with:
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v1.50.1
+          version: v2.12.2
   test:
     runs-on: ubuntu-latest
     needs: vendor
