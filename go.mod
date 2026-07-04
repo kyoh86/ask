@@ -1,6 +1,6 @@
 module github.com/kyoh86/ask
 
-go 1.25.0
+go 1.25
 
 require (
 	golang.org/x/term v0.44.0
