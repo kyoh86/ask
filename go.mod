@@ -1,10 +1,10 @@
 module github.com/kyoh86/ask
 
-go 1.25.0
+go 1.26.0
 
 require (
 	golang.org/x/term v0.45.0
-	golang.org/x/text v0.41.0
+	golang.org/x/text v0.42.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
